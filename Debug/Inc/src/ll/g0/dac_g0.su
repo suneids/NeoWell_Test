@@ -1,0 +1,5 @@
+../Inc/src/ll/g0/dac_g0.c:5:6:DAC_Init	8	static
+../Inc/src/ll/g0/dac_g0.c:36:6:DAC_Write	16	static
+../Inc/src/ll/g0/dac_g0.c:48:6:DAC_WriteDual	16	static
+../Inc/src/ll/g0/dac_g0.c:57:6:DAC_SetTrigger	32	static
+../Inc/src/ll/g0/dac_g0.c:79:6:DAC_EnableDMA	16	static

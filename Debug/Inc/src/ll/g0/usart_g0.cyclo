@@ -1,0 +1,17 @@
+../Inc/src/ll/g0/../../../inc/../ST/g0/core_cm0plus.h:741:22:__NVIC_EnableIRQ	2
+../Inc/src/ll/g0/usart_g0.c:24:6:USART_Init	8
+../Inc/src/ll/g0/usart_g0.c:84:10:USART_Available	1
+../Inc/src/ll/g0/usart_g0.c:90:6:USART_WriteByte	2
+../Inc/src/ll/g0/usart_g0.c:103:6:USART_WriteLine	3
+../Inc/src/ll/g0/usart_g0.c:118:6:USART_ReadByte	2
+../Inc/src/ll/g0/usart_g0.c:130:6:USART_ReadBytes	5
+../Inc/src/ll/g0/usart_g0.c:149:6:echo	2
+../Inc/src/ll/g0/usart_g0.c:157:9:USART_Index	2
+../Inc/src/ll/g0/usart_g0.c:164:6:USART_SetHandlers	4
+../Inc/src/ll/g0/usart_g0.c:172:13:USART_RXHandler_Default	2
+../Inc/src/ll/g0/usart_g0.c:183:13:USART_TXHandler_Default	1
+../Inc/src/ll/g0/usart_g0.c:188:6:USART1_IRQHandler	1
+../Inc/src/ll/g0/usart_g0.c:193:6:USART2_LPUART2_IRQHandler	1
+../Inc/src/ll/g0/usart_g0.c:198:6:USART_IRQHandler_Shared	12
+../Inc/src/ll/g0/usart_g0.c:238:10:USART_BrrCalc	2
+../Inc/src/ll/g0/usart_g0.c:250:9:USART_TakeRxError	1

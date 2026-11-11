@@ -1,0 +1,9 @@
+../Inc/src/SCPI.c:20:13:SCPI_RxCallback	16	static
+../Inc/src/SCPI.c:25:6:SCPI_SetError	32	static,ignoring_inline_asm
+../Inc/src/SCPI.c:37:13:ReconfigureUARTCFG	32	static
+../Inc/src/SCPI.c:54:6:SCPI_Init	16	static
+../Inc/src/SCPI.c:70:6:SCPI_FeedByte	16	static
+../Inc/src/SCPI.c:102:6:SCPI_Process	488	static,ignoring_inline_asm
+../Inc/src/SCPI.c:262:9:SCPI_PopCommand	16	static
+../Inc/src/SCPI.c:276:12:SCPI_CheckError	24	static,ignoring_inline_asm
+../Inc/src/SCPI.c:287:6:SCPI_Write	16	static

@@ -1,0 +1,3 @@
+[submodule "Inc"]
+	path = Inc
+	url = git@github.com:suneids/HAL.git
