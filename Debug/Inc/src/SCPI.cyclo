@@ -1,9 +1,0 @@
-../Inc/src/SCPI.c:20:13:SCPI_RxCallback	1
-../Inc/src/SCPI.c:25:6:SCPI_SetError	2
-../Inc/src/SCPI.c:37:13:ReconfigureUARTCFG	4
-../Inc/src/SCPI.c:54:6:SCPI_Init	1
-../Inc/src/SCPI.c:70:6:SCPI_FeedByte	8
-../Inc/src/SCPI.c:102:6:SCPI_Process	37
-../Inc/src/SCPI.c:262:9:SCPI_PopCommand	4
-../Inc/src/SCPI.c:276:12:SCPI_CheckError	1
-../Inc/src/SCPI.c:287:6:SCPI_Write	1

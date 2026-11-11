@@ -1,9 +1,0 @@
-../Inc/src/ll/g0/../../../inc/../ST/g0/core_cm0plus.h:741:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
-../Inc/src/ll/g0/dma_g0.c:14:16:DMA_GetChannelIndex	24	static
-../Inc/src/ll/g0/dma_g0.c:34:13:DMA_SetRequest	32	static
-../Inc/src/ll/g0/dma_g0.c:57:13:DMA_ClearFlags	32	static
-../Inc/src/ll/g0/dma_g0.c:64:6:DMA_Init	32	static
-../Inc/src/ll/g0/dma_g0.c:99:6:SPI1_DMA_TX_Init	8	static
-../Inc/src/ll/g0/dma_g0.c:128:6:SPI1_DMA_TX_Start	16	static
-../Inc/src/ll/g0/dma_g0.c:145:6:SPI1_DMA_TX_Stop	8	static
-../Inc/src/ll/g0/dma_g0.c:151:9:DMA_IsReady	32	static

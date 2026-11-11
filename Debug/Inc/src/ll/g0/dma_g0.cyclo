@@ -1,9 +1,0 @@
-../Inc/src/ll/g0/../../../inc/../ST/g0/core_cm0plus.h:741:22:__NVIC_EnableIRQ	2
-../Inc/src/ll/g0/dma_g0.c:14:16:DMA_GetChannelIndex	8
-../Inc/src/ll/g0/dma_g0.c:34:13:DMA_SetRequest	8
-../Inc/src/ll/g0/dma_g0.c:57:13:DMA_ClearFlags	2
-../Inc/src/ll/g0/dma_g0.c:64:6:DMA_Init	8
-../Inc/src/ll/g0/dma_g0.c:99:6:SPI1_DMA_TX_Init	1
-../Inc/src/ll/g0/dma_g0.c:128:6:SPI1_DMA_TX_Start	3
-../Inc/src/ll/g0/dma_g0.c:145:6:SPI1_DMA_TX_Stop	1
-../Inc/src/ll/g0/dma_g0.c:151:9:DMA_IsReady	3
