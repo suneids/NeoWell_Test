@@ -2,7 +2,7 @@
 
 #define SAMPLES 128u
 
-static uint16_t saw[2][SAMPLES];
+
 const SCPI_CommandDef commands[] = {
 	{"*IDN",           CMD_IDN,        SCPI_QUERY,   SCPI_ARG_NONE},
 
@@ -42,8 +42,10 @@ SCPI_cfg scpi_cfg = {
     .command_count = sizeof(commands) / sizeof(commands[0])
 };
 
-static uint8_t saw_update_state = SAW_READY;
-static uint8_t saw_dirty = 0;
+
+static uint8_t saw_update_state = SAW_READY, saw_dirty = 0;
+static uint16_t saw[2][SAMPLES], saw_pending[SAW_SAMPLES];
+
 static volatile uint8_t saw_dma_events = 0;
 
 static void SAW_DMACallback(DMA_Event_t event){
@@ -74,7 +76,6 @@ void SAW_Init(void){
 }
 
 
-
 static void SAW_BuildHalf(uint8_t half) {
     uint32_t ampl = registers[REG_AMPL];
     uint32_t offset = registers[REG_OFFSET];
@@ -88,6 +89,64 @@ static void SAW_BuildHalf(uint8_t half) {
         saw[half][i] = (uint16_t)(mv * 4095u / VDDA_MV);
     }
 }
+
+
+static void SAW_BuildPending(void) {
+    uint32_t ampl = registers[REG_AMPL];
+    uint32_t offset = registers[REG_OFFSET];
+
+    uint32_t min_mv = offset - ampl;
+    uint32_t span_mv = 2u * ampl;
+
+    for (uint32_t i = 0; i < SAW_SAMPLES; i++) {
+        uint32_t mv = min_mv + span_mv * i / (SAW_SAMPLES - 1u);
+
+        saw_pending[i] = (uint16_t)(mv * 4095u / VDDA_MV);
+    }
+}
+
+
+void SAW_Process(void) {
+    if (saw_update_state == SAW_READY && saw_dirty) {
+        SAW_BuildPending();
+        saw_dirty = 0;
+        saw_update_state = SAW_WAIT_HT;
+    }
+
+    uint32_t primask = __get_PRIMASK();
+    __disable_irq();
+
+    uint8_t events = saw_dma_events;
+    saw_dma_events = 0;
+
+    __set_PRIMASK(primask);
+
+    uint32_t remaining = DMA1_Channel1->CNDTR;
+
+    switch (saw_update_state) {
+        case SAW_WAIT_HT:
+            if ((events & SAW_WAIT_HT) && remaining <= SAW_SAMPLES && remaining > SAW_SAMPLES / 2u) {
+
+                memcpy(saw[0], saw_pending, sizeof(saw_pending));
+
+                saw_update_state = SAW_WAIT_TC;
+            }
+            break;
+
+        case SAW_WAIT_TC:
+            if ((events & SAW_WAIT_TC) && remaining > SAW_SAMPLES +  SAW_SAMPLES / 2u) {
+
+                memcpy(saw[1], saw_pending, sizeof(saw_pending));
+
+                saw_update_state = SAW_READY;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 void SAW_Build(void) {
     SAW_BuildHalf(0);
@@ -213,8 +272,11 @@ void DEVICE_Analyyze(){
 			        SCPI_Write("ERR:VALUE\r\n", 11);
 			        break;
 			    }
-
 			    registers[REG_AMPL] = value;
+
+			    if (registers[REG_OUTPUT]) saw_dirty = 1u;
+			    else                       SAW_Build();
+
 			    SCPI_Write("OK\r\n", 4);
 			    break;
 			}
@@ -230,6 +292,10 @@ void DEVICE_Analyyze(){
 			    }
 
 			    registers[REG_OFFSET] = value;
+
+			    if (registers[REG_OUTPUT]) saw_dirty = 1u;
+			    else                       SAW_Build();
+
 			    SCPI_Write("OK\r\n", 4);
 			    break;
 			}
@@ -237,9 +303,17 @@ void DEVICE_Analyyze(){
 			case CMD_OUTPUT_SET: {
 			    if (!strcmp(cmd.value, "ON") || !strcmp(cmd.value, "1")) {
 			        registers[REG_OUTPUT] = 1u;
+			        TIM_Start(TIM6);
 			    }
 			    else if (!strcmp(cmd.value, "OFF") || !strcmp(cmd.value, "0")) {
-			        registers[REG_OUTPUT] = 0u;
+			    	TIM_Stop(TIM6);
+
+			    	registers[REG_OUTPUT] = 0u;
+			    	saw_dirty = 0;
+			    	saw_update_state = SAW_READY;
+			    	saw_dma_events = 0;
+
+			    	SAW_Build();
 			    }
 			    else {
 			        SCPI_Write("ERR:VALUE\r\n", 11);
@@ -247,9 +321,6 @@ void DEVICE_Analyyze(){
 			    }
 
 			    SCPI_Write("OK\r\n", 4);
-
-			    if (registers[REG_OUTPUT]) TIM_Start(TIM6);
-			    else TIM_Stop(TIM6);
 
 			    break;
 			}

@@ -68,6 +68,7 @@ extern SCPI_cfg scpi_cfg;
 
 void SAW_Init(void);
 void SAW_Build(void);
+void SAW_Process(void);
 void SAW_SetFrequency(uint32_t freq);
 
 void DEVICE_Analyyze();
