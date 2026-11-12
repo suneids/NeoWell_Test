@@ -326,16 +326,17 @@ void DEVICE_Analyyze(){
 			}
 
 			case CMD_HELP_GET: {
-			    const char help[] = "*IDN?\r\n"
-			    				     "SOUR:FREQ <Hz> | SOUR:FREQ?\r\n"
-									 "SOUR:VOLT <V> | SOUR:VOLT?\r\n"
-								 	 "SOUR:VOLT:OFFS <V> | SOUR:VOLT:OFFS?\r\n"
-									 "OUTP ON|OFF | OUTP?\r\n"
-			    					 "SYST:STAT?\r\n"
-			    					 "SOUR:VALUE?\r\n"
-									 "SYST:HELP?\r\n";
+				const char help[] =
+				    "+--------------+---------------+\r\n"
+				    "|SOUR:FREQ     |1..1000 Hz     |\r\n"
+				    "|SOUR:VOLT     |0..min(O,3.3-O)|\r\n"
+				    "|SOUR:VOLT:OFFS|A..3.3-A       |\r\n"
+				    "|OUTP          |ON/OFF         |\r\n"
+				    "+--------------+---------------+\r\n"
+				    "O=offset A=ampl\r\n"
+				    "*IDN? STATUS? HELP? SOUR:VALUE?\r\n";
 
-			    SCPI_Write(help, sizeof(help) - 1u);
+				SCPI_Write(help, sizeof(help) - 1u);
 			    break;
 			}
 
